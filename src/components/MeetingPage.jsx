@@ -45,7 +45,7 @@ export function MeetingPage() {
   };
 
   useEffect(() => {
-    const s = socketIO.connect("http://localhost:3001");
+    const s = socketIO.connect("https://p2pserver-zrex.onrender.com");
 
     s.on("callEnded", async () => {
       // Stop all tracks
