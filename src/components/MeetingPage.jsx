@@ -30,7 +30,6 @@ export function MeetingPage() {
 
   const copyRoomId = () => {
     navigator.clipboard.writeText(roomId);
-    const meetingLink = `http://localhost:5173/meeting/meet/${roomId}`;
     Store.addNotification({
       title: "Meeting Link copied to clipboard",
       message: `Share this link with others to join the meeting`,
@@ -45,8 +44,8 @@ export function MeetingPage() {
   };
 
   useEffect(() => {
-    // const s = socketIO.connect("https://p2pserver-zrex.onrender.com");
-    const s = socketIO.connect("http://localhost:3001");
+    const s = socketIO.connect("https://p2pserver-zrex.onrender.com");
+    // const s = socketIO.connect("http://localhost:3001");
     s.on("callEnded", async () => {
       // Stop all tracks
       pc.close();
@@ -106,7 +105,6 @@ export function MeetingPage() {
         pc.ontrack = (e) => {
           setRemoteVideoStream(new MediaStream([e.track]));
         };
-           
 
         s.on("iceCandidate", ({ candidate }) => {
           pc.addIceCandidate(candidate);
