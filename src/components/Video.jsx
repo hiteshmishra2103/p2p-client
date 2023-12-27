@@ -15,6 +15,7 @@ export const Video = ({ stream, className }) => {
         ref={videoRef}
         autoPlay={true}
         playsInline={true}
+        muted={true}
       />
     </div>
   );

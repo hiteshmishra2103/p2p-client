@@ -30,7 +30,7 @@ export function MeetingPage() {
 
   const copyRoomId = () => {
     navigator.clipboard.writeText(roomId);
-    const meetingLink = `https://p2prealtime.vercel.app/meeting/meet/${roomId}`;
+    const meetingLink = `http://localhost:5173/meeting/meet/${roomId}`;
     Store.addNotification({
       title: "Meeting Link copied to clipboard",
       message: `Share this link with others to join the meeting`,
@@ -45,8 +45,8 @@ export function MeetingPage() {
   };
 
   useEffect(() => {
-    const s = socketIO.connect("https://p2pserver-zrex.onrender.com");
-
+    // const s = socketIO.connect("https://p2pserver-zrex.onrender.com");
+    const s = socketIO.connect("http://localhost:3001");
     s.on("callEnded", async () => {
       // Stop all tracks
       pc.close();
@@ -78,6 +78,7 @@ export function MeetingPage() {
           audio: true,
         })
         .then(async (stream) => {
+          stream.getTracks().forEach((track) => pc.addTrack(track));
           setVideoStream(stream);
         });
 
@@ -105,6 +106,7 @@ export function MeetingPage() {
         pc.ontrack = (e) => {
           setRemoteVideoStream(new MediaStream([e.track]));
         };
+           
 
         s.on("iceCandidate", ({ candidate }) => {
           pc.addIceCandidate(candidate);
@@ -154,7 +156,6 @@ export function MeetingPage() {
                 pc.onicecandidate = ({ candidate }) => {
                   socket.emit("iceCandidate", { candidate });
                 };
-                pc.addTrack(videoStream.getVideoTracks()[0]);
                 try {
                   await pc.setLocalDescription(await pc.createOffer());
                   console.log({ aa: pc.localDescription });
