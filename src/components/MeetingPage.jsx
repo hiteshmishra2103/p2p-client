@@ -30,7 +30,7 @@ export function MeetingPage() {
 
   const copyRoomId = () => {
     navigator.clipboard.writeText(roomId);
-    const meetingLink = `https://p2prealtime.vercel.app/meeting/meet/${roomId}`;
+    const meetingLink = `http://localhost:3000/meeting/meet/${roomId}`;
     Store.addNotification({
       title: "Meeting Link copied to clipboard",
       message: `Share this link with others to join the meeting`,
@@ -45,14 +45,10 @@ export function MeetingPage() {
   };
 
   useEffect(() => {
-    const s = socketIO.connect("https://p2pserver-zrex.onrender.com");
+    const s = socketIO.connect("http://localhost:3001");
 
     s.on("callEnded", async () => {
-      // Stop all tracks
-      pc.close();
-      pc = null;
       navigate("/");
-
       Store.addNotification({
         title: "Meeting ended",
         message: "The meeting has been ended!",

@@ -1,23 +1,23 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const Endcall = ({ socket, videoStream, remoteVideoStream, pc }) => {
+const Endcall = ({ socket, videoStream, remoteVideoStream, pc, joined }) => {
+  const navigate = useNavigate();
   const endCall = async () => {
+    if (!joined) {
+      navigate("/");
+    }
+    socket.emit("userDisconnected");
     await videoStream.getTracks().forEach((track) => track.stop());
     await remoteVideoStream.getTracks().forEach((track) => track.stop());
 
-    // Close the peer connection
-    pc.close();
-
     // Clear up the peer connection
     pc = null;
+    pc.close();
 
     // Remove the srcObject from the video elements
     document.querySelector(".local-video").srcObject = null;
     document.querySelector(".remote-video").srcObject = null;
-
-    socket.emit("userDisconnected");
-    console.log("end call");
   };
 
   return (
