@@ -114,7 +114,7 @@ export function MeetingPage() {
   }, []);
 
   if (!videoStream) {
-    return <div>Loading...</div>;
+    return <div className="mt-25">Loading...</div>;
   }
 
   if (!meetingJoined) {
