@@ -6,5 +6,5 @@ Local setup:
 4)Now run "node index.js" in server directory and "npm run dev" in client directory.
 5)The app will be live at localhost:5173
 
-I am facing a issue in this app, that audio is going to another user, please solve this issue if you know how to solve it, I have also opened an issue, you can solve it
+I am facing a issue in this app, that audio is not going to another user, please solve this issue if you know how to solve it, I have also opened an issue, you can solve it
 and i will merge it, if it works.
