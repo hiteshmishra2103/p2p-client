@@ -13,6 +13,7 @@ export const Video = ({ stream, className }) => {
       <video
         className="rounded-xl w-full h-full text-left hover:text-blue-600 focus:text-blue-600"
         ref={videoRef}
+        muted
         autoPlay={true}
         playsInline={true}
       />
